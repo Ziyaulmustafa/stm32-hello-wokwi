@@ -33,13 +33,6 @@
       "id": "btn1",
       "top": 200,
       "left": 100
-    },
-    {
-      "type": "wokwi-resistor",
-      "id": "r2",
-      "top": 240,
-      "left": 150,
-      "attrs": { "value": "10k" }
     }
   ],
   "connections": [
@@ -50,9 +43,7 @@
     [ "led1:C", "nucleo:GND.1", "black", [ "v0" ] ],
 
     [ "btn1:1.l", "nucleo:A1", "blue", [ "v0" ] ],
-    [ "btn1:2.r", "nucleo:3V3", "red", [ "v0" ] ],
-    [ "btn1:1.l", "r2:1", "gray", [ "v0" ] ],
-    [ "r2:2", "nucleo:GND.2", "black", [ "v0" ] ]
+    [ "btn1:2.r", "nucleo:3V3", "red", [ "v0" ] ]
   ],
   "dependencies": {}
 }
