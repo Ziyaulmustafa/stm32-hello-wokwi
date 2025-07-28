@@ -9,11 +9,50 @@
       "top": -37.71,
       "left": -264.45,
       "attrs": {}
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led1",
+      "top": 100,
+      "left": 100,
+      "attrs": {
+        "color": "green"
+      }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r1",
+      "top": 100,
+      "left": 100,
+      "attrs": {
+        "value": "330"
+      }
+    },
+    {
+      "type": "wokwi-pushbutton",
+      "id": "btn1",
+      "top": 200,
+      "left": 100
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r2",
+      "top": 240,
+      "left": 150,
+      "attrs": { "value": "10k" }
     }
   ],
   "connections": [
     [ "$serialMonitor:TX", "nucleo:PA3", "", [] ],
-    [ "$serialMonitor:RX", "nucleo:PA2", "", [] ]
+    [ "$serialMonitor:RX", "nucleo:PA2", "", [] ],
+    [ "nucleo:A0", "r1:1", "green", [ "v0" ] ],
+    [ "r1:2", "led1:A", "green", [ "v0" ] ],
+    [ "led1:C", "nucleo:GND.1", "black", [ "v0" ] ],
+
+    [ "btn1:1.l", "nucleo:A1", "blue", [ "v0" ] ],
+    [ "btn1:2.r", "nucleo:3V3", "red", [ "v0" ] ],
+    [ "btn1:1.l", "r2:1", "gray", [ "v0" ] ],
+    [ "r2:2", "nucleo:GND.2", "black", [ "v0" ] ]
   ],
   "dependencies": {}
 }

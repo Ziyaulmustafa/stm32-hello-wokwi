@@ -97,9 +97,18 @@ int main(void)
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
 
+
   char msg[] = "Hello, Wokwi!\r\n";
   HAL_UART_Transmit(&huart2, (uint8_t*)msg, strlen(msg), HAL_MAX_DELAY);
 
+  char pData[4] = {0};
+  HAL_StatusTypeDef Read_Status;
+
+  Read_Status = HAL_UART_Receive(&huart2, pData, 4, HAL_MAX_DELAY);
+  if (Read_Status == HAL_OK)
+    HAL_UART_Transmit(&huart2, (uint8_t*)pData, 4, HAL_MAX_DELAY);
+
+  uint8_t buttonLast = 0;
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -107,7 +116,19 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
+    // HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_0); // Toggle the LED
+    // HAL_Delay(500);                        // Delay 500 ms
 
+  uint8_t buttonState = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_1);
+
+  if (buttonState && !buttonLast)
+  {
+      // Button pressed (rising edge)
+      HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_0);
+      HAL_Delay(200); // Debounce delay
+  }
+
+  buttonLast = buttonState;
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
@@ -251,20 +272,28 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(Led_GPIO_Port, Led_Pin, GPIO_PIN_SET);
+  // HAL_GPIO_WritePin(Led_GPIO_Port, Led_Pin, GPIO_PIN_SET);
 
   /*Configure GPIO pin : User_Button_Pin */
-  GPIO_InitStruct.Pin = User_Button_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
+  GPIO_InitStruct.Pin = GPIO_PIN_1;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(User_Button_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /*Configure GPIO pin : Led_Pin */
-  GPIO_InitStruct.Pin = Led_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  // GPIO_InitStruct.Pin = Led_Pin;
+  // GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  // GPIO_InitStruct.Pull = GPIO_NOPULL;
+  // GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+  // HAL_GPIO_Init(Led_GPIO_Port, &GPIO_InitStruct);
+
+
+  GPIO_InitStruct.Pin = GPIO_PIN_0;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;  // Push-pull output
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-  HAL_GPIO_Init(Led_GPIO_Port, &GPIO_InitStruct);
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /* EXTI interrupt init*/
   HAL_NVIC_SetPriority(EXTI4_15_IRQn, 0, 0);
