@@ -87,6 +87,8 @@ target_sources(
     "Drivers\\STM32C0xx_HAL_Driver\\Src\\stm32c0xx_hal_uart_ex.c"
     "Drivers\\STM32C0xx_HAL_Driver\\Src\\stm32c0xx_hal_uart.c"
     "Drivers\\STM32C0xx_HAL_Driver\\Src\\stm32c0xx_hal.c"
+    "Drivers\\STM32C0xx_HAL_Driver\\Src\\stm32c0xx_hal_spi_ex.c"
+    "Drivers\\STM32C0xx_HAL_Driver\\Src\\stm32c0xx_hal_spi.c"
 )
 
 add_custom_command(

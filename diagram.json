@@ -7,13 +7,16 @@
       "type": "board-st-nucleo-c031c6",
       "id": "nucleo",
       "top": -37.71,
-      "left": -264.45,
+      "left": -400,
       "attrs": {}
-    }
+    },
+    { "type": "wokwi-logic-analyzer", "id": "logic", "top": -10, "left": -10 }
   ],
   "connections": [
-    [ "$serialMonitor:TX", "nucleo:PA3", "", [] ],
-    [ "$serialMonitor:RX", "nucleo:PA2", "", [] ]
+    [ "nucleo:PA5", "logic:D0", "green", [ "v0" ] ],
+    [ "nucleo:PA6", "logic:D1", "blue", [ "v0" ] ], 
+    [ "nucleo:PA7", "logic:D2", "orange", [ "v0" ] ],
+    [ "nucleo:GND.1", "logic:GND", "black", [ "v0" ] ]
   ],
   "dependencies": {}
 }
