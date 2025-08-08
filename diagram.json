@@ -6,17 +6,53 @@
     {
       "type": "board-st-nucleo-c031c6",
       "id": "nucleo",
-      "top": -37.71,
-      "left": -400,
+      "top": -37.57,
+      "left": -404.18,
       "attrs": {}
     },
-    { "type": "wokwi-logic-analyzer", "id": "logic", "top": -10, "left": -10 }
+    {
+      "type": "wokwi-resistor",
+      "id": "r1",
+      "top": -140.6,
+      "left": -144.85,
+      "rotate": 270,
+      "attrs": { "value": "10k" }
+    },
+    { "type": "wokwi-pushbutton", "id": "btn1", "top": -224.2, "left": 0, "attrs": {} },
+    {
+      "type": "wokwi-resistor",
+      "id": "r2",
+      "top": -92.6,
+      "left": 85.55,
+      "rotate": 270,
+      "attrs": { "value": "10k" }
+    },
+    { "type": "wokwi-pushbutton", "id": "btn2", "top": -176.2, "left": 153.6, "attrs": {} },
+    { "type": "wokwi-74hc165", "id": "shiftReg", "top": -30, "left": -71.36, "attrs": {} }
   ],
   "connections": [
-    [ "nucleo:PA5", "logic:D0", "green", [ "v0" ] ],
-    [ "nucleo:PA6", "logic:D1", "blue", [ "v0" ] ], 
-    [ "nucleo:PA7", "logic:D2", "orange", [ "v0" ] ],
-    [ "nucleo:GND.1", "logic:GND", "black", [ "v0" ] ]
+    [ "$serialMonitor:TX", "nucleo:PA3", "", [] ],
+    [ "$serialMonitor:RX", "nucleo:PA2", "", [] ],
+    [ "nucleo:GND.1", "shiftReg:GND", "black", [ "v-240", "h393.6" ] ],
+    [ "nucleo:3V3.1", "shiftReg:VCC", "red", [ "v0" ] ],
+    [ "nucleo:PA5", "shiftReg:CP", "green", [ "h102.95", "v-134.4" ] ],
+    [ "nucleo:PA6", "shiftReg:Q7", "blue", [ "v-201.6", "h160.55" ] ],
+    [ "nucleo:PA4", "shiftReg:PL", "purple", [ "h288", "v-230.4" ] ],
+    [ "nucleo:PA7", "shiftReg:DS", "orange", [ "v-192", "h150.95" ] ],
+    [ "nucleo:GND.1", "shiftReg:D2", "black", [ "h0" ] ],
+    [ "nucleo:GND.1", "shiftReg:D3", "black", [ "h0" ] ],
+    [ "nucleo:GND.1", "shiftReg:D4", "black", [ "h0" ] ],
+    [ "nucleo:GND.1", "shiftReg:D5", "black", [ "h0" ] ],
+    [ "nucleo:GND.1", "shiftReg:D6", "black", [ "h0" ] ],
+    [ "nucleo:GND.1", "shiftReg:D7", "black", [ "h0" ] ],
+    [ "btn1:2.r", "nucleo:3V3.1", "red", [ "v0" ] ],
+    [ "btn1:1.l", "r1:1", "gray", [ "h-57.6", "h-19.2", "v105.6" ] ],
+    [ "r1:2", "nucleo:GND.2", "black", [ "h-470.05", "v258.65" ] ],
+    [ "shiftReg:D0", "r1:1", "green", [ "v0" ] ],
+    [ "btn2:2.r", "nucleo:3V3.1", "red", [ "v0" ] ],
+    [ "btn2:1.l", "r2:1", "gray", [ "h-57.6", "h-19.2", "v105.6" ] ],
+    [ "r2:2", "nucleo:GND.2", "black", [ "h-470.05", "v258.65" ] ],
+    [ "shiftReg:D1", "r2:1", "green", [ "v0" ] ]
   ],
   "dependencies": {}
 }
